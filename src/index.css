@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/* ─── Tailwind v4 Theme Customizations ─── */
+@theme {
+  --color-blue-dark: #073B66;
+  --color-blue-petrol: #0B4F71;
+  --color-cyan-brand: #00B8C8;
+  --color-bg-main: #F4F7FA;
+  --color-zinc-text: #4B5563;
+  --color-green-success: #16A34A;
+  --color-yellow-warning: #F59E0B;
+  --color-red-danger: #DC2626;
+
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+  --animate-live-pulse: live-pulse 2s ease-in-out infinite;
+  --animate-cell-float: cell-float 6s ease-in-out infinite;
+  --animate-heat-pulse: heat-pulse 3s ease-in-out infinite;
+  --animate-fade-in-up: fadeInUp 0.5s ease forwards;
+
+  @keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 184, 200, 0.3)); }
+    50% { filter: drop-shadow(0 0 12px rgba(0, 184, 200, 0.6)); }
+  }
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 184, 200, 0.5); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(0, 184, 200, 0); }
+  }
+  @keyframes cell-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(2px, -3px) scale(1.03); }
+  }
+  @keyframes heat-pulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ─── Global Styles & Helper Classes ─── */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #F4F7FA;
+  color: #1E293B;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom styles for visual microscopy and heatmap simulations */
+.microscopy-simulation {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(145deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+}
+
+.cell {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(100, 180, 255, 0.4);
+  background: radial-gradient(circle at 40% 40%, rgba(100, 180, 255, 0.15), transparent 70%);
+}
+
+.heatmap-simulation {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(145deg, #0a0a1a 0%, #111827 50%, #0f172a 100%);
+}
+
+.heat-spot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(12px);
+}

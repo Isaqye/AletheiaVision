@@ -1,0 +1,511 @@
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 1
+Documentação do Protótipo 2
+AletheiaVision Core - Módulo de Onboarding de Editoras
+Produto 5 da A4 - Protótipo com campos reais, filtros, indicadores e
+informações de apoio à decisão gerencial
+Item
+Descrição
+Projeto
+AletheiaVision IA
+Protótipo principal
+Protótipo 1 - Painel de Análise de Imagens Científicas
+Protótipo complementar
+Protótipo 2 - Módulo de Onboarding de Editoras
+Objetivo
+Apoiar implantação, integração via API, treinamento, suporte, NPS e
+acompanhamento das editoras clientes.
+Tecnologia sugerida
+React + Vite + Tailwind CSS, com dados fictícios/mockados e sem backend.
+Uso sugerido
+Esta documentação pode ser copiada para o Antigravity para gerar uma tela visual e realista do módulo
+de onboarding. A tela deve ser usada como evidência do Produto 5 da A4, pois apresenta filtros,
+indicadores, campos reais, pipeline, checklist, tickets e decisões gerenciais apoiadas.
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 2
+1. Contexto do protótipo
+A AletheiaVision IA possui como produto principal a plataforma de análise de imagens científicas
+biomédicas. O Protótipo 1 representa o núcleo principal da empresa, pois está diretamente ligado à
+proposta de valor: detectar indícios de fraude em imagens científicas usando IA, score de similaridade,
+classificação de risco, heatmap e revisão humana.
+O Protótipo 2 representa um módulo complementar dentro da AletheiaVision Core. Ele não substitui o
+sistema principal de IA, mas apoia o processo de onboarding de novas editoras clientes, ajudando a
+empresa a organizar a implantação, o treinamento, a integração via API, o suporte inicial e a satisfação
+do cliente.
+Frase-chave para a apresentação
+“O Protótipo 1 representa o produto principal da AletheiaVision IA, responsável pela análise inteligente de
+imagens científicas. Já o Protótipo 2 representa um módulo complementar de onboarding, criado para apoiar
+a entrada de novas editoras na plataforma, controlar etapas de implantação, tickets, responsáveis e
+indicadores de adoção.”
+2. Papel do Protótipo 2 no sistema
+Protótipo
+Papel na empresa
+Importância
+Protótipo 1 - Análise de
+Imagem
+Sistema principal da AletheiaVision
+Núcleo da proposta de valor, pois realiza
+análise por IA, risco, heatmap e revisão
+humana.
+Protótipo 2 - Onboarding de
+Editoras
+Módulo complementar de gestão de
+clientes
+Apoia implantação, integração, treinamento,
+suporte e acompanhamento das editoras.
+Nome do sistema: AletheiaVision Core. Nome da tela: Módulo de Onboarding de Editoras.
+3. Objetivo da tela
+• Cadastrar e visualizar editoras em implantação.
+• Acompanhar o status do onboarding e o pipeline de etapas.
+• Controlar checklist de implantação, treinamento e integração via API.
+• Registrar responsáveis comerciais e técnicos.
+• Acompanhar tickets de suporte e pendências.
+• Visualizar indicadores como tempo médio de onboarding, taxa de conversão e NPS.
+• Apoiar decisões gerenciais sobre priorização de clientes, gargalos de implantação e satisfação.
+4. Tipo de protótipo e tecnologia
+Item
+Definição
+Tipo
+Protótipo visual funcional de uma única página.
+Backend
+Não necessário.
+Banco de dados
+Não necessário.
+Dados
+Fictícios/mockados no próprio código.
+Objetivo
+Apresentação acadêmica e demonstração visual do Produto 5 da A4.
+Tecnologia sugerida
+React + Vite + Tailwind CSS.
+A aplicação pode ser feita em apenas uma tela, com os dados fictícios declarados diretamente no código.
+5. Estrutura visual da tela
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 3
+┌──────────────────────────────────────────────────────────────┐
+│ Header: Logo + AletheiaVision Core + Usuário                 │
+├──────────────────────────────────────────────────────────────┤
+│ Sidebar: Dashboard, Análise de Imagens, Onboarding...        │
+├──────────────────────────────────────────────────────────────┤
+│ Área principal                                                │
+│ 1. Título da tela                                             │
+│ 2. Aviso: módulo complementar ao sistema principal            │
+│ 3. Filtros                                                    │
+│ 4. Cards de indicadores/KPIs                                  │
+│ 5. Pipeline de onboarding                                     │
+│ 6. Lista de editoras clientes                                 │
+│ 7. Detalhes da editora selecionada                            │
+│ 8. Checklist de implantação                                   │
+│ 9. Tickets recentes                                           │
+│ 10. Botões de ação                                            │
+└──────────────────────────────────────────────────────────────┘
+6. Identidade visual
+Elemento
+Cor sugerida
+Azul escuro principal
+#073B66
+Azul petróleo
+#0B4F71
+Ciano / tecnologia
+#00B8C8
+Fundo claro
+#F4F7FA
+Branco dos cards
+#FFFFFF
+Cinza de texto
+#4B5563
+Verde sucesso
+#16A34A
+Amarelo atenção
+#F59E0B
+Vermelho crítico
+#DC2626
+Azul destaque para pipeline
+#2563EB
+7. Componentes da tela
+7.1 Header
+O cabeçalho deve conter o nome do sistema, o subtítulo do módulo, o usuário logado e o botão de criação
+de onboarding.
+AletheiaVision Core
+Módulo de Onboarding de Editoras
+Gestor: Anthony Quaresma
+[Novo onboarding]
+7.2 Aviso de contexto
+Logo abaixo do título, inclua um card informativo deixando explícito que este módulo é complementar ao
+sistema principal.
+Este módulo é complementar ao Painel de Análise de Imagens Científicas. Enquanto o Protótipo 1 representa
+o núcleo principal da AletheiaVision IA, este módulo apoia a implantação, treinamento, suporte e
+acompanhamento das editoras clientes.
+7.3 Sidebar
+Dashboard
+Análise de Imagens
+Revisão Humana
+Onboarding de Editoras
+Editoras Clientes
+Tickets de Suporte
+Relatórios
+Configurações
+A opção “Onboarding de Editoras” deve aparecer selecionada.
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 4
+8. Filtros e KPIs
+8.1 Filtros
+Filtro
+Opções simuladas
+Status
+Todos, Lead recebido, Demo realizada, Contrato assinado, Integração API, Treinamento,
+Cliente ativo
+Porte da editora
+Todos, Pequena, Média, Grande
+Área científica
+Todas, Biomédica, Oncologia, Genética, Microbiologia
+Responsável
+Todos, Anthony, Luan, Isaque, Gabriel
+Período
+Maio/2026, Últimos 30 dias, Trimestre atual
+8.2 KPIs principais
+Indicador
+Valor fictício
+Uso gerencial
+Editoras em implantação
+8
+Acompanhar carga de onboarding
+Tempo médio de onboarding
+6 dias
+Medir eficiência do processo
+Taxa de conversão
+42%
+Avaliar desempenho comercial
+Tickets abertos
+17
+Identificar gargalos de suporte
+NPS médio
+74
+Medir satisfação do cliente
+Integrações concluídas
+5
+Acompanhar implantação técnica
+9. Pipeline de onboarding
+O pipeline deve mostrar as etapas do processo e a quantidade de editoras em cada fase. Ele ajuda o nível
+tático a identificar gargalos e priorizar ações.
+Lead recebido → Demo realizada → Proposta enviada → Contrato assinado
+     12               9                  6                  4
+Integração API → Treinamento → 30 dias de uso → Cliente ativo
+      4               3              2               2
+10. Tabela de editoras
+Criar uma tabela com editoras fictícias. A tabela deve permitir visualizar volume, sistema atual, status,
+responsável, prioridade e ação.
+Editora
+Volume/mês
+Sistema atual
+Status
+Resp.
+Prioridade
+Editora BioMed
+180 artigos/mês
+OJS
+Integração API
+Luan
+Alta
+Revista Ciência Viva
+75 artigos/mês
+Submissão manual
+Treinamento
+Isaque
+Média
+Health Research Press
+320 artigos/mês
+ScholarOne
+Contrato assinado
+Luan
+Crítica
+Dados mockados sugeridos
+const editoras = [
+  {
+    id: "ED-001",
+    nome: "Editora BioMed",
+    porte: "Média",
+    volume: "180 artigos/mês",
+    area: "Oncologia",
+    sistemaAtual: "OJS",
+    status: "Integração API",
+    responsavelComercial: "Anthony",
+    responsavelTecnico: "Luan",
+    prioridade: "Alta",
+    nps: null
+  },
+  {
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 5
+    id: "ED-002",
+    nome: "Revista Ciência Viva",
+    porte: "Pequena",
+    volume: "75 artigos/mês",
+    area: "Genética",
+    sistemaAtual: "Submissão manual",
+    status: "Treinamento",
+    responsavelComercial: "Gabriel",
+    responsavelTecnico: "Isaque",
+    prioridade: "Média",
+    nps: 82
+  },
+  {
+    id: "ED-003",
+    nome: "Health Research Press",
+    porte: "Grande",
+    volume: "320 artigos/mês",
+    area: "Biomédica",
+    sistemaAtual: "ScholarOne",
+    status: "Contrato assinado",
+    responsavelComercial: "Anthony",
+    responsavelTecnico: "Luan",
+    prioridade: "Crítica",
+    nps: null
+  }
+];
+11. Detalhes da editora selecionada
+Quando a tela carregar, pode mostrar automaticamente a Editora BioMed.
+Campo
+Valor fictício
+ID da editora
+ED-001
+Nome
+Editora BioMed
+Porte
+Média
+Área científica
+Oncologia
+Volume estimado
+180 artigos/mês
+Sistema editorial atual
+OJS
+Plano sugerido
+Profissional
+Responsável comercial
+Anthony Quaresma
+Responsável técnico
+Luan Assis
+Status atual
+Integração API
+Data de entrada
+03/05/2026
+Previsão de ativação
+12/05/2026
+12. Checklist, tickets e atualização
+12.1 Checklist de implantação
+[x] Formulário de qualificação preenchido
+[x] Demonstração realizada
+[x] Proposta enviada
+[x] Contrato assinado
+[ ] Integração via API concluída
+[ ] Treinamento da equipe editorial
+[ ] Primeiro artigo analisado
+[ ] Pesquisa NPS após 30 dias
+12.2 Tickets recentes
+Ticket
+Descrição
+Status
+Prioridade
+#102
+Erro no formato de arquivo XML
+Aberto
+Alta
+#103
+Dúvida sobre relatório PDF
+Resolvido
+Média
+#104
+Configuração de credenciais da API
+Em andamento
+Alta
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 6
+12.3 Formulário rápido de atualização
+Campo
+Tipo / opções
+Novo status
+Lead recebido; Demo realizada; Proposta enviada; Contrato assinado; Integração API;
+Treinamento; 30 dias de uso; Cliente ativo
+Próxima ação
+Agendar treinamento; Solicitar credenciais; Concluir integração API; Enviar pesquisa NPS;
+Ativar cliente; Abrir ticket técnico
+Responsável
+Anthony Quaresma; Luan Assis; Isaque Severino; Gabriel Rodrigues
+Observação interna
+Cliente já assinou contrato e enviou credenciais iniciais. Equipe técnica precisa validar
+integração com OJS antes do treinamento.
+Botões de ação: [Atualizar status] [Abrir ticket] [Agendar treinamento] [Enviar pesquisa NPS] [Ativar
+cliente]
+13. Decisões gerenciais apoiadas
+Nível
+Decisão apoiada
+Operacional
+Saber quais tarefas de implantação ainda faltam.
+Tático
+Priorizar editoras com maior volume e maior risco de atraso.
+Estratégico
+Identificar perfis de editoras com maior potencial de expansão.
+Decisões apoiadas: reduzir tempo médio de onboarding; priorizar editoras com maior volume de artigos;
+identificar gargalos de integração técnica; medir satisfação após os primeiros 30 dias; planejar expansão
+para editoras com maior potencial.
+14. Requisitos funcionais e não funcionais
+14.1 Requisitos funcionais
+• 1. Exibir lista de editoras em onboarding.
+• 2. Mostrar filtros de consulta.
+• 3. Exibir KPIs do processo de onboarding.
+• 4. Mostrar pipeline de etapas.
+• 5. Exibir detalhes de uma editora selecionada.
+• 6. Mostrar checklist de implantação.
+• 7. Exibir tickets recentes.
+• 8. Permitir atualização visual do status.
+• 9. Mostrar responsáveis comercial e técnico.
+• 10. Mostrar decisões gerenciais apoiadas.
+14.2 Requisitos não funcionais
+Requisito
+Descrição
+Usabilidade
+Tela clara, simples e fácil de explicar.
+Visual profissional
+Aparência de sistema SaaS moderno.
+Coerência
+Deve usar a mesma identidade visual do Protótipo 1.
+Responsividade
+Deve abrir bem em notebook ou projetor.
+Clareza gerencial
+Indicadores e decisões devem ficar visíveis.
+Simplicidade
+Não precisa de backend nem autenticação real.
+15. Prompt pronto para usar no Antigravity
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 7
+Crie uma aplicação web em React + Vite + Tailwind CSS com apenas uma tela, simulando um sistema SaaS chamado “AletheiaVision Core”.
+Contexto:
+A AletheiaVision IA é uma startup de Inteligência Artificial para integridade científica. O produto principal da empresa é o Protótipo 1: Pain
+Esta nova tela representa o Protótipo 2: Módulo de Onboarding de Editoras. Ele NÃO é o núcleo principal da empresa. Ele é um módulo complement
+Objetivo:
+Criar um protótipo visual realista, sem backend, usando dados fictícios. A tela deve parecer um dashboard profissional de uma empresa SaaS. O 
+Layout:
+- Header superior com o nome “AletheiaVision Core”, subtítulo “Módulo de Onboarding de Editoras”, usuário “Gestor: Anthony Quaresma” e botão “
+- Sidebar lateral com menu: Dashboard, Análise de Imagens, Revisão Humana, Onboarding de Editoras, Editoras Clientes, Tickets de Suporte, Rela
+- A opção “Onboarding de Editoras” deve estar destacada.
+- Área principal com título “Painel de Onboarding de Novas Editoras”.
+- Logo abaixo do título, criar um card informativo dizendo:
+  “Este módulo é complementar ao Painel de Análise de Imagens Científicas. Enquanto o Protótipo 1 representa o núcleo principal da AletheiaVis
+- Bloco de filtros com selects:
+  Status, Porte da editora, Área científica, Responsável e Período.
+- Cards de indicadores/KPIs:
+  1. Editoras em implantação: 8
+  2. Tempo médio de onboarding: 6 dias
+  3. Taxa de conversão: 42%
+  4. Tickets abertos: 17
+  5. NPS médio: 74
+  6. Integrações concluídas: 5
+- Criar um pipeline visual de onboarding com etapas:
+  Lead recebido: 12
+  Demo realizada: 9
+  Proposta enviada: 6
+  Contrato assinado: 4
+  Integração API: 4
+  Treinamento: 3
+  30 dias de uso: 2
+  Cliente ativo: 2
+- Criar tabela de editoras com colunas:
+  Editora, Volume/mês, Sistema atual, Status, Responsável, Prioridade e Ação.
+- Use estes dados fictícios:
+  ED-001 | Editora BioMed | 180 artigos/mês | OJS | Integração API | Luan | Alta
+  ED-002 | Revista Ciência Viva | 75 artigos/mês | Submissão manual | Treinamento | Isaque | Média
+  ED-003 | Health Research Press | 320 artigos/mês | ScholarOne | Contrato assinado | Luan | Crítica
+- Mostrar detalhes da editora ED-001:
+  ID: ED-001
+  Nome: Editora BioMed
+  Porte: Média
+  Área científica: Oncologia
+  Volume estimado: 180 artigos/mês
+  Sistema editorial atual: OJS
+  Plano sugerido: Profissional
+  Responsável comercial: Anthony Quaresma
+  Responsável técnico: Luan Assis
+  Status atual: Integração API
+  Data de entrada: 03/05/2026
+  Previsão de ativação: 12/05/2026
+- Criar checklist de implantação:
+  Formulário de qualificação preenchido: concluído
+  Demonstração realizada: concluído
+  Proposta enviada: concluído
+  Contrato assinado: concluído
+  Integração via API concluída: pendente
+  Treinamento da equipe editorial: pendente
+  Primeiro artigo analisado: pendente
+  Pesquisa NPS após 30 dias: pendente
+- Criar seção de tickets recentes:
+  #102 | Erro no formato de arquivo XML | Aberto | Alta
+  #103 | Dúvida sobre relatório PDF | Resolvido | Média
+  #104 | Configuração de credenciais da API | Em andamento | Alta
+- Criar formulário “Atualização do onboarding” com:
+  Select: Novo status, opções Lead recebido, Demo realizada, Proposta enviada, Contrato assinado, Integração API, Treinamento, 30 dias de uso,
+  Select: Próxima ação, opções Agendar treinamento, Solicitar credenciais, Concluir integração API, Enviar pesquisa NPS, Ativar cliente, Abrir
+  Select: Responsável, opções Anthony Quaresma, Luan Assis, Isaque Severino, Gabriel Rodrigues.
+  Textarea: Observação interna, preenchida com:
+  “Cliente já assinou contrato e enviou credenciais iniciais. Equipe técnica precisa validar integração com OJS antes do treinamento.”
+- Botões no final:
+  Atualizar status
+  Abrir ticket
+  Agendar treinamento
+  Enviar pesquisa NPS
+  Ativar cliente
+- Criar um card lateral ou seção final chamada “Decisões gerenciais apoiadas”, contendo:
+  Operacional: saber quais tarefas de implantação ainda faltam.
+  Tático: priorizar editoras com maior volume e maior risco de atraso.
+  Estratégico: identificar perfis de editoras com maior potencial de expansão.
+Design:
+- Usar identidade visual tecnológica e limpa, coerente com o Protótipo 1.
+- Cores principais:
+  Azul escuro #073B66
+  Ciano #00B8C8
+  Fundo #F4F7FA
+  Branco #FFFFFF
+AletheiaVision Core - Documentação do Protótipo 2
+Sistemas de Informação Gerenciais - A4
+Protótipo complementar ao Painel de Análise de Imagens Científicas
+Página 8
+  Verde #16A34A
+  Amarelo #F59E0B
+  Vermelho #DC2626
+  Azul destaque #2563EB
+- Usar cards com bordas arredondadas, sombras suaves, ícones simples se possível e badges coloridos para status, prioridade e etapas.
+- A tela deve ser responsiva e bonita em formato desktop, adequada para print e apresentação em slides.
+- Não usar backend. Todos os dados devem estar mockados no próprio código.
+16. Texto para explicar na apresentação
+“O Protótipo 2 representa um módulo complementar da AletheiaVision Core. O produto principal da empresa
+é o Protótipo 1, responsável pela análise de imagens científicas com IA. Já este segundo módulo apoia o
+processo de onboarding de novas editoras, permitindo acompanhar etapas, responsáveis, integração via API,
+tickets, treinamento e NPS. Ele ajuda decisões operacionais, como identificar tarefas pendentes; decisões
+táticas, como reduzir o tempo médio de implantação; e decisões estratégicas, como identificar editoras com
+maior potencial de expansão.”
+17. Checklist final
+• Nome AletheiaVision Core.
+• Indicação clara de que o módulo é complementar.
+• Filtros reais.
+• KPIs de onboarding.
+• Pipeline de etapas.
+• Tabela de editoras.
+• Detalhes da editora selecionada.
+• Checklist de implantação.
+• Tickets recentes.
+• Formulário de atualização.
+• Botões de ação.
+• Decisões gerenciais apoiadas.
+Com isso, o Protótipo 2 fica coerente com a A4 e complementa bem o Protótipo 1.
