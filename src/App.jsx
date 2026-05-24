@@ -19,6 +19,8 @@ import OnboardingDecisions from './components/onboarding/OnboardingDecisions';
 import ClientDashboard from './components/client/ClientDashboard';
 import TicketsManager from './components/TicketsManager';
 import MyTickets from './components/client/MyTickets';
+import Chatbot from './components/client/Chatbot';
+import Reports from './components/Reports';
 
 const initialSubmissions = [
   {
@@ -56,6 +58,114 @@ const initialSubmissions = [
     imageType: "Fluorescência",
     submissionDate: "14/05/2026",
     classification: "Baixo risco"
+  },
+  {
+    id: "AV-004",
+    title: "Marcadores moleculares em carcinoma mamário",
+    editor: "Editora BioMed",
+    area: "Oncologia",
+    risk: "Alto",
+    status: "Revisado",
+    score: 0.91,
+    imageType: "Microscopia",
+    submissionDate: "08/05/2026",
+    classification: "Alto risco"
+  },
+  {
+    id: "AV-005",
+    title: "Sequenciamento de nova variante genômica",
+    editor: "Revista Ciência Viva",
+    area: "Genética",
+    risk: "Baixo",
+    status: "Finalizado",
+    score: 0.18,
+    imageType: "Eletroforese",
+    submissionDate: "05/05/2026",
+    classification: "Baixo risco"
+  },
+  {
+    id: "AV-006",
+    title: "Ressonância de proteínas em tecido hepático",
+    editor: "Health Research Press",
+    area: "Biomédica",
+    risk: "Médio",
+    status: "Pendente",
+    score: 0.53,
+    imageType: "Ressonância",
+    submissionDate: "14/05/2026",
+    classification: "Médio risco"
+  },
+  {
+    id: "AV-007",
+    title: "Proliferação bacteriana em meios seletivos",
+    editor: "Editora BioMed",
+    area: "Microbiologia",
+    risk: "Baixo",
+    status: "Finalizado",
+    score: 0.15,
+    imageType: "Fluorescência",
+    submissionDate: "02/05/2026",
+    classification: "Baixo risco"
+  },
+  {
+    id: "AV-008",
+    title: "Citometria de fluxo em linhagem tumoral",
+    editor: "Health Research Press",
+    area: "Oncologia",
+    risk: "Alto",
+    status: "Pendente",
+    score: 0.82,
+    imageType: "Microscopia",
+    submissionDate: "16/05/2026",
+    classification: "Alto risco"
+  },
+  {
+    id: "AV-009",
+    title: "Mapeamento epigenético em células-tronco",
+    editor: "Revista Ciência Viva",
+    area: "Genética",
+    risk: "Alto",
+    status: "Pendente",
+    score: 0.78,
+    imageType: "Eletroforese",
+    submissionDate: "18/05/2026",
+    classification: "Alto risco"
+  },
+  {
+    id: "AV-010",
+    title: "Análise histopatológica de biópsia renal",
+    editor: "Editora BioMed",
+    area: "Biomédica",
+    risk: "Médio",
+    status: "Revisado",
+    score: 0.57,
+    imageType: "Microscopia",
+    submissionDate: "20/05/2026",
+    classification: "Médio risco"
+  },
+  {
+    id: "AV-011",
+    title: "Resistência antimicrobiana em isolados clínicos",
+    editor: "Health Research Press",
+    area: "Microbiologia",
+    risk: "Médio",
+    status: "Finalizado",
+    score: 0.48,
+    imageType: "Fluorescência",
+    submissionDate: "22/05/2026",
+    classification: "Médio risco"
+  },
+  {
+    id: "AV-012",
+    title: "Western blot de expressão proteica PD-L1",
+    editor: "Revista Ciência Viva",
+    area: "Biomédica",
+    risk: "Alto",
+    status: "Revisado",
+    score: 0.85,
+    imageType: "Eletroforese",
+    submissionDate: "24/05/2026",
+    classification: "Alto risco"
   }
 ];
 
@@ -97,6 +207,97 @@ const initialEditoras = [
     responsavelComercial: "Anthony",
     responsavelTecnico: "Luan",
     prioridade: "Crítica",
+    nps: null
+  },
+  {
+    id: "ED-004",
+    nome: "Journal MicroSci",
+    porte: "Pequena",
+    volume: "60 artigos/mês",
+    area: "Microbiologia",
+    sistemaAtual: "Submissão manual",
+    status: "Lead recebido",
+    responsavelComercial: "Gabriel",
+    responsavelTecnico: "Isaque",
+    prioridade: "Baixa",
+    nps: null
+  },
+  {
+    id: "ED-005",
+    nome: "Editora Genômica Brasil",
+    porte: "Média",
+    volume: "150 artigos/mês",
+    area: "Genética",
+    sistemaAtual: "OJS",
+    status: "Demo realizada",
+    responsavelComercial: "Anthony",
+    responsavelTecnico: "Isaque",
+    prioridade: "Alta",
+    nps: null
+  },
+  {
+    id: "ED-006",
+    nome: "Cancer Research Latin America",
+    porte: "Grande",
+    volume: "410 artigos/mês",
+    area: "Oncologia",
+    sistemaAtual: "ScholarOne",
+    status: "Cliente ativo",
+    responsavelComercial: "Anthony",
+    responsavelTecnico: "Luan",
+    prioridade: "Crítica",
+    nps: 91
+  },
+  {
+    id: "ED-007",
+    nome: "Revista Patologia Tropical",
+    porte: "Pequena",
+    volume: "45 artigos/mês",
+    area: "Microbiologia",
+    sistemaAtual: "Submissão manual",
+    status: "Contrato assinado",
+    responsavelComercial: "Gabriel",
+    responsavelTecnico: "Luan",
+    prioridade: "Média",
+    nps: null
+  },
+  {
+    id: "ED-008",
+    nome: "International Biomedical Journal",
+    porte: "Grande",
+    volume: "500 artigos/mês",
+    area: "Biomédica",
+    sistemaAtual: "Editorial Manager",
+    status: "Integração API",
+    responsavelComercial: "Anthony",
+    responsavelTecnico: "Isaque",
+    prioridade: "Crítica",
+    nps: null
+  },
+  {
+    id: "ED-009",
+    nome: "Editora CelTech",
+    porte: "Média",
+    volume: "200 artigos/mês",
+    area: "Genética",
+    sistemaAtual: "OJS",
+    status: "Cliente ativo",
+    responsavelComercial: "Gabriel",
+    responsavelTecnico: "Isaque",
+    prioridade: "Alta",
+    nps: 88
+  },
+  {
+    id: "ED-010",
+    nome: "Fronteiras da Oncologia",
+    porte: "Média",
+    volume: "130 artigos/mês",
+    area: "Oncologia",
+    sistemaAtual: "OJS",
+    status: "Demo realizada",
+    responsavelComercial: "Luan",
+    responsavelTecnico: "Gabriel",
+    prioridade: "Alta",
     nps: null
   }
 ];
@@ -421,12 +622,18 @@ export default function App() {
           />
         )}
 
+        {/* RELATÓRIOS */}
+        {activePage === 'reports' && (
+          <Reports submissions={submissions} editoras={editoras} />
+        )}
+
         {/* OUTRAS TELAS SIMULADAS */}
         {activePage !== 'analysis' && 
          activePage !== 'onboarding' && 
          activePage !== 'client-dashboard' && 
          activePage !== 'tickets' && 
-         activePage !== 'client-tickets' && (
+         activePage !== 'client-tickets' && 
+         activePage !== 'reports' && (
           <div className="bg-white rounded-xl shadow-sm border border-slate-200/80 p-12 text-center flex flex-col items-center justify-center min-h-[350px] animate-fade-in-up">
             <div className="w-16 h-16 rounded-full bg-cyan-brand/10 text-cyan-brand flex items-center justify-center mb-4">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
@@ -459,6 +666,9 @@ export default function App() {
         visible={toastVisible} 
         onClose={() => setToastVisible(false)} 
       />
+
+      {/* Chatbot for Client Portal */}
+      {userRole === 'client' && <Chatbot />}
     </div>
   );
 }

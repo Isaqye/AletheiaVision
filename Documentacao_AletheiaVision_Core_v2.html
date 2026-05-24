@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentação Completa — AletheiaVision Core</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --blue-dark: #073B66;
+      --blue-petrol: #0B4F71;
+      --cyan-brand: #00B8C8;
+      --bg-main: #F4F7FA;
+      --green: #16A34A;
+      --yellow: #F59E0B;
+      --red: #DC2626;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      color: #1e293b;
+      line-height: 1.7;
+      font-size: 11pt;
+    }
+
+    @media print {
+      body { font-size: 10pt; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none; }
+      h2 { page-break-after: avoid; }
+      table { page-break-inside: avoid; }
+    }
+
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-petrol) 50%, #0a3d5c 100%);
+      color: white;
+      text-align: center;
+      padding: 60px 40px;
+    }
+
+    .cover h1 {
+      font-size: 36pt;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .cover .subtitle {
+      font-size: 14pt;
+      color: var(--cyan-brand);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .cover .version {
+      font-size: 11pt;
+      color: rgba(255,255,255,0.6);
+      margin-top: 40px;
+    }
+
+    .cover .team {
+      margin-top: 30px;
+      font-size: 10pt;
+      color: rgba(255,255,255,0.7);
+      line-height: 2;
+    }
+
+    .cover .team strong { color: var(--cyan-brand); }
+
+    .cover .logo-placeholder {
+      width: 120px;
+      height: 120px;
+      border: 3px solid var(--cyan-brand);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      font-size: 40pt;
+      background: rgba(0,184,200,0.08);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 50px;
+    }
+
+    h2 {
+      font-size: 18pt;
+      font-weight: 800;
+      color: var(--blue-dark);
+      border-bottom: 3px solid var(--cyan-brand);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      margin-top: 40px;
+      letter-spacing: -0.5px;
+    }
+
+    h3 {
+      font-size: 13pt;
+      font-weight: 700;
+      color: var(--blue-petrol);
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+
+    h4 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    p { margin-bottom: 12px; }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    li { margin-bottom: 5px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0 20px 0;
+      font-size: 9.5pt;
+    }
+
+    th {
+      background: var(--blue-dark);
+      color: white;
+      font-weight: 700;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 8pt;
+      font-weight: 700;
+    }
+
+    .badge-high { background: #fef2f2; color: var(--red); border: 1px solid #fecaca; }
+    .badge-medium { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-low { background: #f0fdf4; color: var(--green); border: 1px solid #bbf7d0; }
+    .badge-info { background: #ecfeff; color: var(--blue-petrol); border: 1px solid #a5f3fc; }
+    .badge-active { background: #f0fdf4; color: var(--green); border: 1px solid #bbf7d0; }
+
+    .info-box {
+      background: linear-gradient(135deg, #ecfeff 0%, #f0f9ff 100%);
+      border-left: 4px solid var(--cyan-brand);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      font-size: 10pt;
+    }
+
+    .warning-box {
+      background: linear-gradient(135deg, #fffbeb 0%, #fefce8 100%);
+      border-left: 4px solid var(--yellow);
+      padding: 15px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 15px 0;
+      font-size: 10pt;
+    }
+
+    .code-block {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 9pt;
+      margin: 10px 0 15px 0;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+
+    .code-inline {
+      background: #f1f5f9;
+      color: var(--blue-petrol);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 9pt;
+      font-weight: 600;
+    }
+
+    .toc {
+      background: var(--bg-main);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 25px 30px;
+      margin: 20px 0;
+    }
+
+    .toc h3 {
+      margin-top: 0;
+      color: var(--blue-dark);
+    }
+
+    .toc ol { counter-reset: toc; list-style: none; margin-left: 0; }
+    .toc ol li { counter-increment: toc; margin-bottom: 6px; }
+    .toc ol li::before {
+      content: counter(toc) ". ";
+      font-weight: 700;
+      color: var(--cyan-brand);
+    }
+
+    .toc a { color: var(--blue-petrol); text-decoration: none; font-weight: 500; }
+    .toc a:hover { text-decoration: underline; }
+
+    .arch-diagram {
+      background: var(--bg-main);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+      text-align: center;
+      font-size: 9pt;
+      color: #475569;
+    }
+
+    .flow-step {
+      display: inline-block;
+      padding: 6px 14px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      margin: 4px;
+      font-weight: 600;
+      font-size: 8.5pt;
+    }
+
+    .flow-arrow {
+      display: inline-block;
+      color: var(--cyan-brand);
+      font-weight: 900;
+      margin: 0 4px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #94a3b8;
+      font-size: 8pt;
+      border-top: 1px solid #e2e8f0;
+      margin-top: 40px;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--cyan-brand);
+      color: var(--blue-dark);
+      border: none;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 11pt;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(0,184,200,0.4);
+      z-index: 999;
+      transition: all 0.2s;
+    }
+
+    .print-btn:hover { transform: scale(1.05); box-shadow: 0 12px 40px rgba(0,184,200,0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- CAPA -->
+  <div class="cover">
+    <div class="logo-placeholder">🔬</div>
+    <h1>AletheiaVision Core</h1>
+    <div class="subtitle">Documentação Completa do Sistema</div>
+    <p style="max-width: 600px; color: rgba(255,255,255,0.8); font-size: 11pt;">
+      Plataforma de Integridade Científica — Análise de Imagens por IA, Onboarding de Editoras, Portal do Cliente e Relatórios Gerenciais.
+    </p>
+    <div class="version">
+      Versão 2.0 — Maio/2026<br>
+      Disciplina: Sistemas de Informação Gerenciais (SIG)<br>
+      Curso: Sistemas de Informação
+    </div>
+    <div class="team">
+      <strong>Anthony Quaresma</strong> — Gestão do Projeto & Direção Comercial<br>
+      <strong>Luan Assis</strong> — Arquitetura de Software & Desenvolvimento Técnico<br>
+      <strong>Isaque Severino</strong> — Desenvolvimento Técnico & Infraestrutura de Dados<br>
+      <strong>Gabriel Rodrigues</strong> — Desenvolvimento Técnico & Suporte de Negócios
+    </div>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div class="container">
+
+    <!-- SUMÁRIO -->
+    <div class="toc">
+      <h3>📑 Sumário</h3>
+      <ol>
+        <li><a href="#visao-geral">Visão Geral do Sistema</a></li>
+        <li><a href="#arquitetura">Arquitetura e Stack Tecnológica</a></li>
+        <li><a href="#estrutura">Estrutura de Arquivos</a></li>
+        <li><a href="#modulo1">Módulo 1 — Análise de Imagens Científicas</a></li>
+        <li><a href="#modulo2">Módulo 2 — Onboarding de Editoras</a></li>
+        <li><a href="#portal-cliente">Portal do Cliente (Editora)</a></li>
+        <li><a href="#chatbot">Chatbot de Dúvidas (Assistente Virtual)</a></li>
+        <li><a href="#tickets">Sistema de Tickets de Suporte</a></li>
+        <li><a href="#relatorios">Central de Relatórios</a></li>
+        <li><a href="#decisoes">Apoio à Decisão Gerencial (SIG)</a></li>
+        <li><a href="#dados">Base de Dados de Exemplo</a></li>
+        <li><a href="#perfis">Perfis de Acesso</a></li>
+        <li><a href="#execucao">Como Executar o Projeto</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. VISÃO GERAL -->
+    <h2 id="visao-geral">1. Visão Geral do Sistema</h2>
+    <p>
+      A <strong>AletheiaVision IA</strong> é uma startup de tecnologia focada na garantia da integridade de publicações científicas. A plataforma <strong>AletheiaVision Core</strong> é um ecossistema web moderno e responsivo que unifica múltiplos fluxos operacionais em uma interface SaaS premium.
+    </p>
+    <p>O sistema atende a dois públicos principais:</p>
+    <ul>
+      <li><strong>Equipe Interna (Staff):</strong> Analistas, gestores e equipe técnica da AletheiaVision que operam a análise de imagens e o processo de onboarding de clientes.</li>
+      <li><strong>Clientes (Editoras Científicas):</strong> Editoras parceiras que submetem artigos para análise e acompanham o status das suas submissões.</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>💡 Proposta de Valor:</strong> Detectar fraudes visuais em artigos científicos biomédicos (duplicação de imagens, manipulação de pixels, montagens) através de Inteligência Artificial, com revisão humana estruturada como segunda camada de validação.
+    </div>
+
+    <h3>Módulos do Sistema</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Módulo</th>
+          <th>Descrição</th>
+          <th>Público-Alvo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Análise de Imagens</strong></td>
+          <td>Processamento de artigos submetidos com score de risco gerado por IA e revisão humana</td>
+          <td>Equipe Interna</td>
+        </tr>
+        <tr>
+          <td><strong>Onboarding de Editoras</strong></td>
+          <td>Gestão do ciclo de implantação de novos clientes — do lead até cliente ativo</td>
+          <td>Equipe Interna</td>
+        </tr>
+        <tr>
+          <td><strong>Portal do Cliente</strong></td>
+          <td>Dashboard da editora com histórico de submissões, KPIs e acesso a chamados</td>
+          <td>Editoras (Clientes)</td>
+        </tr>
+        <tr>
+          <td><strong>Chatbot de Dúvidas</strong></td>
+          <td>Assistente virtual com respostas automáticas sobre a plataforma</td>
+          <td>Editoras (Clientes)</td>
+        </tr>
+        <tr>
+          <td><strong>Tickets de Suporte</strong></td>
+          <td>Sistema bidirecional de chamados entre clientes e equipe técnica</td>
+          <td>Ambos</td>
+        </tr>
+        <tr>
+          <td><strong>Relatórios</strong></td>
+          <td>Central analítica com gráficos, KPIs e tabelas consolidadas</td>
+          <td>Equipe Interna</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 2. ARQUITETURA -->
+    <div class="page-break"></div>
+    <h2 id="arquitetura">2. Arquitetura e Stack Tecnológica</h2>
+
+    <h3>Tecnologias Utilizadas</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tecnologia</th>
+          <th>Versão</th>
+          <th>Papel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>React</strong></td><td>19.2.6</td><td>Framework SPA reativo e componentizado</td></tr>
+        <tr><td><strong>Vite</strong></td><td>8.0.12</td><td>Bundler e servidor de desenvolvimento com HMR</td></tr>
+        <tr><td><strong>Tailwind CSS</strong></td><td>4.3.0</td><td>Framework de estilização com design tokens nativos</td></tr>
+        <tr><td><strong>Lucide React</strong></td><td>1.16.0</td><td>Biblioteca de ícones vetoriais SVG</td></tr>
+        <tr><td><strong>ESLint</strong></td><td>10.3.0</td><td>Linter de qualidade de código</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Padrão Arquitetural</h3>
+    <p>A aplicação segue o padrão <strong>SPA (Single Page Application)</strong> com arquitetura baseada em componentes React. O roteamento é gerenciado via estado interno (<span class="code-inline">useState</span>) no componente central <span class="code-inline">App.jsx</span>.</p>
+
+    <div class="arch-diagram">
+      <strong>Fluxo de Dados</strong><br><br>
+      <span class="flow-step">App.jsx (Estado Central)</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Header / Sidebar</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Navegação por Perfil</span><br><br>
+      <span class="flow-step">initialSubmissions[]</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Filtros</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Componentes de Visualização</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Ações (Toast)</span>
+    </div>
+
+    <h3>Design System</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Valor</th>
+          <th>Uso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="code-inline">blue-dark</span></td><td>#073B66</td><td>Cor primária, títulos, header</td></tr>
+        <tr><td><span class="code-inline">blue-petrol</span></td><td>#0B4F71</td><td>Destaques secundários, gradientes</td></tr>
+        <tr><td><span class="code-inline">cyan-brand</span></td><td>#00B8C8</td><td>Marca, CTAs, links ativos</td></tr>
+        <tr><td><span class="code-inline">green-success</span></td><td>#16A34A</td><td>Sucesso, baixo risco</td></tr>
+        <tr><td><span class="code-inline">yellow-warning</span></td><td>#F59E0B</td><td>Alerta, risco médio</td></tr>
+        <tr><td><span class="code-inline">red-danger</span></td><td>#DC2626</td><td>Perigo, alto risco</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 3. ESTRUTURA -->
+    <div class="page-break"></div>
+    <h2 id="estrutura">3. Estrutura de Arquivos</h2>
+
+    <div class="code-block">
+AletheiaVision/
+├── public/
+│   ├── favicon.svg               # Ícone da aba do navegador
+│   ├── icons.svg                 # Sprite de ícones globais
+│   └── logo-aletheia.png         # Logo oficial da empresa
+├── src/
+│   ├── assets/
+│   │   ├── hero.png              # Imagem hero para demonstrações
+│   │   ├── react.svg             # Logo React
+│   │   └── vite.svg              # Logo Vite
+│   ├── components/
+│   │   ├── client/
+│   │   │   ├── Chatbot.jsx       # Chatbot de dúvidas (assistente virtual)
+│   │   │   ├── ClientDashboard.jsx  # Dashboard do cliente
+│   │   │   └── MyTickets.jsx     # Chamados do cliente
+│   │   ├── onboarding/
+│   │   │   ├── EditorOnboardingDetails.jsx  # Detalhes de onboarding
+│   │   │   ├── EditorsTable.jsx  # Tabela de editoras
+│   │   │   ├── OnboardingDecisions.jsx  # Decisões de onboarding
+│   │   │   ├── OnboardingFilters.jsx    # Filtros de onboarding
+│   │   │   ├── OnboardingKPIs.jsx       # KPIs de onboarding
+│   │   │   └── Pipeline.jsx     # Pipeline visual (Kanban)
+│   │   ├── DecisionsGrid.jsx     # Decisões gerenciais (Módulo 1)
+│   │   ├── Filters.jsx           # Filtros de consulta (Módulo 1)
+│   │   ├── Header.jsx            # Barra superior com logo da empresa
+│   │   ├── KPIs.jsx              # Indicadores operacionais (Módulo 1)
+│   │   ├── Reports.jsx           # Central de Relatórios
+│   │   ├── ReviewForm.jsx        # Formulário de parecer humano
+│   │   ├── Sidebar.jsx           # Navegação lateral com troca de perfis
+│   │   ├── SubmissionDetails.jsx # Detalhes + Heatmap
+│   │   ├── SubmissionsTable.jsx  # Tabela de submissões
+│   │   ├── TicketsManager.jsx    # Gestão de tickets (Staff)
+│   │   └── Toast.jsx             # Notificações flutuantes
+│   ├── App.jsx                   # Componente central (rotas + estado)
+│   ├── App.css                   # Estilos customizados
+│   ├── index.css                 # Tailwind CSS v4 + Design System
+│   └── main.jsx                  # Ponto de entrada React
+├── index.html                    # HTML principal
+├── package.json                  # Dependências e scripts NPM
+├── vite.config.js                # Configuração do Vite
+└── eslint.config.js              # Configuração do Linter
+    </div>
+
+    <p><strong>Total de componentes:</strong> 20 arquivos JSX organizados em 3 diretórios temáticos.</p>
+
+    <!-- 4. MÓDULO 1 -->
+    <div class="page-break"></div>
+    <h2 id="modulo1">4. Módulo 1 — Análise de Imagens Científicas</h2>
+    <p>O núcleo principal da proposta de valor da startup. Representa a tela de processamento científico onde artigos biomédicos submetidos são avaliados contra fraudes visuais.</p>
+
+    <h3>Fluxo do Processo</h3>
+    <div class="arch-diagram">
+      <span class="flow-step">Submissão recebida</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Análise automática IA</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Score de risco gerado</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Heatmap renderizado</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Revisão humana</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Parecer final</span>
+    </div>
+
+    <h3>Componentes</h3>
+
+    <h4>4.1 Filtros de Consulta (Filters.jsx)</h4>
+    <p>Painel com 5 filtros simultâneos para refinar a visualização das submissões:</p>
+    <table>
+      <thead>
+        <tr><th>Filtro</th><th>Opções</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Período</td><td>Todos os Períodos, Hoje, Maio/2026, Últimos 30 dias</td></tr>
+        <tr><td>Editora</td><td>Editora BioMed, Revista Ciência Viva, Health Research Press</td></tr>
+        <tr><td>Área Científica</td><td>Biomédica, Genética, Oncologia, Microbiologia</td></tr>
+        <tr><td>Risco</td><td>Baixo, Médio, Alto</td></tr>
+        <tr><td>Status</td><td>Pendente, Revisado, Finalizado</td></tr>
+      </tbody>
+    </table>
+
+    <h4>4.2 Painel de KPIs (KPIs.jsx)</h4>
+    <p>Indicadores-chave de performance da operação de análise:</p>
+    <ul>
+      <li><strong>Artigos analisados:</strong> 412 (volume mensal)</li>
+      <li><strong>Imagens processadas:</strong> 1.856 (carga técnica)</li>
+      <li><strong>Precisão da IA:</strong> 91,3% (qualidade de detecção)</li>
+      <li><strong>Falsos positivos:</strong> 7,8% (ajustes de limiar)</li>
+      <li><strong>Tempo médio por artigo:</strong> 3min42s</li>
+      <li><strong>Casos pendentes:</strong> 61 (priorização de gargalos)</li>
+    </ul>
+
+    <h4>4.3 Tabela de Submissões (SubmissionsTable.jsx)</h4>
+    <p>Listagem dinâmica de artigos com colunas: ID, Título, Editora, Área, Status, Score de Risco. A seleção de uma linha carrega os detalhes na seção inferior.</p>
+
+    <h4>4.4 Detalhes e Heatmap (SubmissionDetails.jsx)</h4>
+    <p>Visualização lado a lado contendo:</p>
+    <ul>
+      <li><strong>Imagem Original:</strong> Simulação de microscopia/eletroforese com células renderizadas em CSS.</li>
+      <li><strong>Mapa de Calor (Heatmap):</strong> Sobreposição com pontos de suspeita de fraude identificados pela rede neural, com animações de pulsação.</li>
+      <li><strong>Metadados:</strong> ID, tipo de imagem, score de similaridade e data.</li>
+    </ul>
+
+    <h4>4.5 Formulário de Parecer Humano (ReviewForm.jsx)</h4>
+    <p>Interface para o analista registrar sua decisão técnica:</p>
+    <ul>
+      <li><strong>Decisões:</strong> Confirmar suspeita, Descartar suspeita, Solicitar nova análise</li>
+      <li><strong>Prioridade:</strong> Baixa, Média, Alta, Crítica</li>
+      <li><strong>Justificativa técnica:</strong> Campo de texto livre</li>
+    </ul>
+
+    <h4>4.6 Decisões Gerenciais (DecisionsGrid.jsx)</h4>
+    <p>Painel com decisões apoiadas pelo sistema nos três níveis hierárquicos: operacional, tático e estratégico.</p>
+
+    <!-- 5. MÓDULO 2 -->
+    <div class="page-break"></div>
+    <h2 id="modulo2">5. Módulo 2 — Onboarding de Editoras</h2>
+    <p>Módulo de apoio gerencial que gerencia o ciclo de vida inicial das editoras científicas clientes, desde o fechamento do contrato até a entrada em produção.</p>
+
+    <h3>Pipeline de Onboarding (6 etapas)</h3>
+    <div class="arch-diagram">
+      <span class="flow-step">Lead recebido</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Demo realizada</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Contrato assinado</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Integração API</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Treinamento</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Cliente ativo</span>
+    </div>
+
+    <h3>Componentes</h3>
+
+    <h4>5.1 Filtros de Onboarding (OnboardingFilters.jsx)</h4>
+    <table>
+      <thead>
+        <tr><th>Filtro</th><th>Opções</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Status</td><td>Lead recebido, Demo realizada, Contrato assinado, Integração API, Treinamento, Cliente ativo</td></tr>
+        <tr><td>Porte</td><td>Pequena, Média, Grande</td></tr>
+        <tr><td>Área Científica</td><td>Biomédica, Oncologia, Genética, Microbiologia</td></tr>
+        <tr><td>Responsável</td><td>Anthony, Luan, Isaque, Gabriel</td></tr>
+        <tr><td>Período</td><td>Maio/2026, Últimos 30 dias, Trimestre atual</td></tr>
+      </tbody>
+    </table>
+
+    <h4>5.2 KPIs de Onboarding (OnboardingKPIs.jsx)</h4>
+    <ul>
+      <li>Editoras em implantação: 8</li>
+      <li>Tempo médio de onboarding: 6 dias</li>
+      <li>Taxa de conversão: 42%</li>
+      <li>Tickets abertos: 17</li>
+      <li>NPS médio: 74</li>
+      <li>Integrações concluídas: 5</li>
+    </ul>
+
+    <h4>5.3 Pipeline Visual (Pipeline.jsx)</h4>
+    <p>Kanban horizontal mostrando o volume de editoras em cada etapa do funil de onboarding, com barras de progresso coloridas por estágio.</p>
+
+    <h4>5.4 Tabela de Editoras (EditorsTable.jsx)</h4>
+    <p>Listagem de todas as editoras com: ID, Nome, Porte, Volume, Área, Sistema atual, Status e Prioridade.</p>
+
+    <h4>5.5 Detalhes do Onboarding (EditorOnboardingDetails.jsx)</h4>
+    <p>Painel expandido com checklist técnico, informações da editora, formulário de ação gerencial e abertura de tickets de suporte.</p>
+
+    <h4>5.6 Decisões de Onboarding (OnboardingDecisions.jsx)</h4>
+    <p>Grid de decisões apoiadas pelo sistema nos três níveis hierárquicos, específico para o contexto de implantação de clientes.</p>
+
+    <!-- 6. PORTAL DO CLIENTE -->
+    <div class="page-break"></div>
+    <h2 id="portal-cliente">6. Portal do Cliente (Editora)</h2>
+    <p>Interface dedicada às editoras parceiras. Acessível alternando o perfil de acesso para "Cliente" na barra lateral.</p>
+
+    <h3>6.1 Dashboard do Cliente (ClientDashboard.jsx)</h3>
+    <p>Painel principal da editora contendo:</p>
+    <ul>
+      <li><strong>Banner de boas-vindas</strong> personalizado com nome da editora e plano ativo</li>
+      <li><strong>KPIs do cliente:</strong> Artigos submetidos, Análises concluídas, Em análise, Alertas de integridade, Chamados abertos, Chamados resolvidos</li>
+      <li><strong>Histórico de submissões:</strong> Tabela com ID, Título, Área, Risco, Status, Score e Data</li>
+    </ul>
+
+    <h3>6.2 Meus Chamados (MyTickets.jsx)</h3>
+    <p>Interface para o cliente gerenciar seus chamados de suporte:</p>
+    <ul>
+      <li>Visualização de todos os chamados da editora</li>
+      <li>Abertura de novos chamados com título, categoria, prioridade e descrição</li>
+      <li>Acompanhamento de respostas da equipe técnica</li>
+    </ul>
+
+    <!-- 7. CHATBOT -->
+    <h2 id="chatbot">7. Chatbot de Dúvidas (Assistente Virtual)</h2>
+    <p>Componente flutuante disponível exclusivamente no perfil "Cliente". Aparece como um botão no canto inferior direito da tela.</p>
+
+    <h3>Características</h3>
+    <ul>
+      <li><strong>Botão flutuante</strong> com animação pulsante (glow) e ícone de chat</li>
+      <li><strong>Janela de chat</strong> com header gradiente, indicador de "online" e avatar do bot</li>
+      <li><strong>Indicador de digitação</strong> com bolinhas animadas para simular tempo de resposta natural</li>
+      <li><strong>Sugestões rápidas</strong> sempre visíveis com as perguntas mais frequentes</li>
+    </ul>
+
+    <h3>Perguntas Rápidas Disponíveis</h3>
+    <table>
+      <thead>
+        <tr><th>Pergunta</th><th>Tema</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Como submeter um artigo?</td><td>Submissão</td></tr>
+        <tr><td>Qual o prazo de análise?</td><td>Prazos</td></tr>
+        <tr><td>O que significa o score?</td><td>Score de risco</td></tr>
+        <tr><td>Como abrir um chamado?</td><td>Suporte</td></tr>
+        <tr><td>Como exportar relatório?</td><td>Relatórios</td></tr>
+        <tr><td>Integração com OJS</td><td>Integração</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Temas de Respostas Automáticas</h3>
+    <p>O chatbot reconhece palavras-chave e responde automaticamente sobre 9 temas: submissão, prazos, score de risco, chamados, relatórios, integração API, tokens/JWT, planos e contato.</p>
+
+    <!-- 8. TICKETS -->
+    <div class="page-break"></div>
+    <h2 id="tickets">8. Sistema de Tickets de Suporte</h2>
+    <p>Sistema bidirecional que conecta editoras clientes à equipe técnica da AletheiaVision.</p>
+
+    <h3>Perspectiva Interna (TicketsManager.jsx)</h3>
+    <ul>
+      <li>Visualização de todos os tickets de todas as editoras</li>
+      <li>Filtros por status, prioridade e editora</li>
+      <li>Resposta técnica com atualização de status</li>
+      <li>Indicadores de prioridade e tempo de abertura</li>
+    </ul>
+
+    <h3>Perspectiva do Cliente (MyTickets.jsx)</h3>
+    <ul>
+      <li>Visualização apenas dos tickets da editora logada</li>
+      <li>Abertura de novos chamados</li>
+      <li>Acompanhamento de respostas</li>
+    </ul>
+
+    <h3>Dados de Tickets de Exemplo</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Editora</th><th>Título</th><th>Status</th><th>Prioridade</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>#102</td><td>Editora BioMed</td><td>Erro no formato de arquivo XML</td><td><span class="badge badge-high">Aberto</span></td><td><span class="badge badge-high">Alta</span></td></tr>
+        <tr><td>#103</td><td>Revista Ciência Viva</td><td>Dúvida sobre relatório PDF</td><td><span class="badge badge-active">Resolvido</span></td><td><span class="badge badge-medium">Média</span></td></tr>
+        <tr><td>#104</td><td>Health Research Press</td><td>Configuração de credenciais da API</td><td><span class="badge badge-info">Em andamento</span></td><td><span class="badge badge-high">Alta</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- 9. RELATÓRIOS -->
+    <h2 id="relatorios">9. Central de Relatórios</h2>
+    <p>Módulo analítico completo com visualizações gráficas baseadas nos dados reais do sistema. Acessível pelo menu lateral em "Relatórios".</p>
+
+    <h3>Aba: Análise de Imagens</h3>
+    <table>
+      <thead>
+        <tr><th>Seção</th><th>Descrição</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>KPIs com Tendência</strong></td><td>Total de submissões, Score médio, Análises concluídas, Em revisão — cada um com indicador de tendência (%)</td></tr>
+        <tr><td><strong>Distribuição por Área</strong></td><td>Gráfico de barras horizontais por área científica com score médio</td></tr>
+        <tr><td><strong>Distribuição por Risco</strong></td><td>Gráfico donut SVG com Alto, Médio e Baixo risco em porcentagem</td></tr>
+        <tr><td><strong>Status das Análises</strong></td><td>Cards visuais de Pendente, Revisado e Finalizado com proporção</td></tr>
+        <tr><td><strong>Volume por Editora</strong></td><td>Barras horizontais com indicador de alto risco por editora</td></tr>
+        <tr><td><strong>Tipo de Imagem</strong></td><td>Grid de cards por tipo (Microscopia, Eletroforese, Fluorescência, Ressonância)</td></tr>
+        <tr><td><strong>Top 5 Maior Risco</strong></td><td>Tabela rankada das submissões com maior score de risco</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Aba: Onboarding</h3>
+    <table>
+      <thead>
+        <tr><th>Seção</th><th>Descrição</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>KPIs</strong></td><td>Total editoras, Clientes ativos, Em pipeline, NPS médio</td></tr>
+        <tr><td><strong>Funil do Pipeline</strong></td><td>Barras de progresso por etapa do pipeline de onboarding</td></tr>
+        <tr><td><strong>Distribuição por Porte</strong></td><td>Cards com emoji e contagem por porte (Pequena, Média, Grande)</td></tr>
+        <tr><td><strong>Por Área Científica</strong></td><td>Barras horizontais por área de atuação das editoras</td></tr>
+        <tr><td><strong>Tabela de Editoras</strong></td><td>Listagem completa com NPS, volume, responsáveis e status</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Exportação</h3>
+    <ul>
+      <li><strong>Exportar PDF</strong> — Botão para exportação do relatório em formato PDF</li>
+      <li><strong>Exportar Power BI</strong> — Botão para exportação de dados compatível com Power BI</li>
+    </ul>
+
+    <!-- 10. DECISÕES -->
+    <div class="page-break"></div>
+    <h2 id="decisoes">10. Apoio à Decisão Gerencial (SIG)</h2>
+    <p>O principal objetivo acadêmico do sistema é demonstrar como a informação estruturada apoia a tomada de decisões em diferentes níveis hierárquicos:</p>
+
+    <table>
+      <thead>
+        <tr><th>Nível</th><th>Análise de Imagens</th><th>Onboarding de Editoras</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Operacional</strong></td>
+          <td>Priorização de imagens de altíssimo risco na fila do analista humano</td>
+          <td>Acompanhamento de tarefas pendentes no checklist de implantação</td>
+        </tr>
+        <tr>
+          <td><strong>Tático</strong></td>
+          <td>Ajuste do limiar (threshold) da IA para balancear falsos positivos e carga humana</td>
+          <td>Alocação de responsáveis técnicos baseada em volume e prioridade</td>
+        </tr>
+        <tr>
+          <td><strong>Estratégico</strong></td>
+          <td>Avaliação da maturidade da IA para embasar expansão comercial</td>
+          <td>Identificação de perfis de editoras com menor tempo de onboarding e maior NPS</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 11. DADOS -->
+    <h2 id="dados">11. Base de Dados de Exemplo</h2>
+
+    <h3>11.1 Submissões (12 registros)</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Título</th><th>Editora</th><th>Área</th><th>Risco</th><th>Score</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>AV-001</td><td>Expressão celular em tecidos tumorais</td><td>Editora BioMed</td><td>Oncologia</td><td><span class="badge badge-high">Alto</span></td><td>0.87</td><td>Pendente</td></tr>
+        <tr><td>AV-002</td><td>Análise genética em amostras clínicas</td><td>R. Ciência Viva</td><td>Genética</td><td><span class="badge badge-medium">Médio</span></td><td>0.64</td><td>Revisado</td></tr>
+        <tr><td>AV-003</td><td>Resposta imune em cultura celular</td><td>Health Research</td><td>Microbiologia</td><td><span class="badge badge-low">Baixo</span></td><td>0.22</td><td>Finalizado</td></tr>
+        <tr><td>AV-004</td><td>Marcadores moleculares em carcinoma mamário</td><td>Editora BioMed</td><td>Oncologia</td><td><span class="badge badge-high">Alto</span></td><td>0.91</td><td>Revisado</td></tr>
+        <tr><td>AV-005</td><td>Sequenciamento de nova variante genômica</td><td>R. Ciência Viva</td><td>Genética</td><td><span class="badge badge-low">Baixo</span></td><td>0.18</td><td>Finalizado</td></tr>
+        <tr><td>AV-006</td><td>Ressonância de proteínas em tecido hepático</td><td>Health Research</td><td>Biomédica</td><td><span class="badge badge-medium">Médio</span></td><td>0.53</td><td>Pendente</td></tr>
+        <tr><td>AV-007</td><td>Proliferação bacteriana em meios seletivos</td><td>Editora BioMed</td><td>Microbiologia</td><td><span class="badge badge-low">Baixo</span></td><td>0.15</td><td>Finalizado</td></tr>
+        <tr><td>AV-008</td><td>Citometria de fluxo em linhagem tumoral</td><td>Health Research</td><td>Oncologia</td><td><span class="badge badge-high">Alto</span></td><td>0.82</td><td>Pendente</td></tr>
+        <tr><td>AV-009</td><td>Mapeamento epigenético em células-tronco</td><td>R. Ciência Viva</td><td>Genética</td><td><span class="badge badge-high">Alto</span></td><td>0.78</td><td>Pendente</td></tr>
+        <tr><td>AV-010</td><td>Análise histopatológica de biópsia renal</td><td>Editora BioMed</td><td>Biomédica</td><td><span class="badge badge-medium">Médio</span></td><td>0.57</td><td>Revisado</td></tr>
+        <tr><td>AV-011</td><td>Resistência antimicrobiana em isolados clínicos</td><td>Health Research</td><td>Microbiologia</td><td><span class="badge badge-medium">Médio</span></td><td>0.48</td><td>Finalizado</td></tr>
+        <tr><td>AV-012</td><td>Western blot de expressão proteica PD-L1</td><td>R. Ciência Viva</td><td>Biomédica</td><td><span class="badge badge-high">Alto</span></td><td>0.85</td><td>Revisado</td></tr>
+      </tbody>
+    </table>
+
+    <h3>11.2 Editoras (10 registros)</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Nome</th><th>Porte</th><th>Área</th><th>Status</th><th>NPS</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ED-001</td><td>Editora BioMed</td><td>Média</td><td>Oncologia</td><td>Integração API</td><td>—</td></tr>
+        <tr><td>ED-002</td><td>Revista Ciência Viva</td><td>Pequena</td><td>Genética</td><td>Treinamento</td><td>82</td></tr>
+        <tr><td>ED-003</td><td>Health Research Press</td><td>Grande</td><td>Biomédica</td><td>Contrato assinado</td><td>—</td></tr>
+        <tr><td>ED-004</td><td>Journal MicroSci</td><td>Pequena</td><td>Microbiologia</td><td>Lead recebido</td><td>—</td></tr>
+        <tr><td>ED-005</td><td>Editora Genômica Brasil</td><td>Média</td><td>Genética</td><td>Demo realizada</td><td>—</td></tr>
+        <tr><td>ED-006</td><td>Cancer Research Latin America</td><td>Grande</td><td>Oncologia</td><td>Cliente ativo</td><td>91</td></tr>
+        <tr><td>ED-007</td><td>Revista Patologia Tropical</td><td>Pequena</td><td>Microbiologia</td><td>Contrato assinado</td><td>—</td></tr>
+        <tr><td>ED-008</td><td>International Biomedical Journal</td><td>Grande</td><td>Biomédica</td><td>Integração API</td><td>—</td></tr>
+        <tr><td>ED-009</td><td>Editora CelTech</td><td>Média</td><td>Genética</td><td>Cliente ativo</td><td>88</td></tr>
+        <tr><td>ED-010</td><td>Fronteiras da Oncologia</td><td>Média</td><td>Oncologia</td><td>Demo realizada</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 12. PERFIS -->
+    <div class="page-break"></div>
+    <h2 id="perfis">12. Perfis de Acesso</h2>
+    <p>O sistema possui um seletor de perfil na barra lateral que alterna entre duas visões:</p>
+
+    <table>
+      <thead>
+        <tr><th>Perfil</th><th>Telas Disponíveis</th><th>Usuário Simulado</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Interno (Staff)</strong></td>
+          <td>Dashboard, Análise de Imagens, Revisão Humana, Onboarding de Editoras, Editoras Clientes, Tickets de Suporte, Relatórios, Configurações</td>
+          <td>Isaque Severino (Analista)</td>
+        </tr>
+        <tr>
+          <td><strong>Cliente (Editora)</strong></td>
+          <td>Painel da Editora, Análise de Imagem (IA), Meus Chamados, Configurações + Chatbot flutuante</td>
+          <td>Dr. Anthony Quaresma (Editor Científico)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>💡 Nota:</strong> O Chatbot de dúvidas só aparece quando o perfil "Cliente" está selecionado, pois é uma funcionalidade de autoatendimento dedicada às editoras parceiras.
+    </div>
+
+    <!-- 13. EXECUÇÃO -->
+    <h2 id="execucao">13. Como Executar o Projeto</h2>
+
+    <h3>Pré-requisitos</h3>
+    <ul>
+      <li><strong>Node.js</strong> versão 18 ou superior</li>
+      <li><strong>NPM</strong> versão 9 ou superior</li>
+    </ul>
+
+    <h3>Passos de Instalação</h3>
+    <div class="code-block">
+# 1. Clone o repositório
+git clone https://github.com/seu-usuario/AletheiaVision.git
+
+# 2. Navegue até o diretório
+cd AletheiaVision
+
+# 3. Instale as dependências
+npm install
+
+# 4. Inicie o servidor de desenvolvimento
+npm run dev
+
+# 5. Acesse no navegador
+# http://localhost:5173
+    </div>
+
+    <h3>Scripts Disponíveis</h3>
+    <table>
+      <thead>
+        <tr><th>Comando</th><th>Descrição</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="code-inline">npm run dev</span></td><td>Inicia o servidor de desenvolvimento com HMR</td></tr>
+        <tr><td><span class="code-inline">npm run build</span></td><td>Gera o build de produção otimizado</td></tr>
+        <tr><td><span class="code-inline">npm run preview</span></td><td>Visualiza o build de produção localmente</td></tr>
+        <tr><td><span class="code-inline">npm run lint</span></td><td>Executa a análise estática de código (ESLint)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <strong>AletheiaVision Core</strong> — Documentação Completa v2.0<br>
+      Maio/2026 — Sistemas de Informação Gerenciais (SIG)<br>
+      Anthony Quaresma • Luan Assis • Isaque Severino • Gabriel Rodrigues
+    </div>
+
+  </div>
+
+  <!-- Botão de Impressão/PDF -->
+  <button class="print-btn no-print" onclick="window.print()">
+    📄 Salvar como PDF
+  </button>
+
+</body>
+</html>

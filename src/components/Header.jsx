@@ -38,12 +38,12 @@ export default function Header({ activePage, onAction, userRole, setActivePage }
     <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-gradient-to-r from-blue-dark via-blue-petrol to-blue-dark/95 border-b border-cyan-brand/20 backdrop-blur-md flex items-center justify-between px-6 shadow-md">
       <div className="flex items-center gap-4">
         <div className="flex items-center justify-center animate-pulse-glow">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <circle cx="16" cy="16" r="14" stroke="#00B8C8" strokeWidth="2.5" fill="none"/>
-            <circle cx="16" cy="16" r="6" fill="#00B8C8" opacity="0.8"/>
-            <path d="M16 2 L16 6 M16 26 L16 30 M2 16 L6 16 M26 16 L30 16" stroke="#00B8C8" strokeWidth="1.5" strokeLinecap="round"/>
-            <circle cx="16" cy="16" r="10" stroke="#00B8C8" strokeWidth="1" strokeDasharray="3 3" fill="none" opacity="0.5"/>
-          </svg>
+          <img
+            src="/logo-aletheia.png"
+            alt="AletheiaVision Logo"
+            className="w-24 h-24 object-contain rounded-md"
+            style={{ filter: 'drop-shadow(0 0 6px rgba(0, 184, 200, 0.4))' }}
+          />
         </div>
         <div className="flex flex-col">
           <h1 className="text-lg font-extrabold text-white tracking-tight leading-none">AletheiaVision Core</h1>
@@ -61,7 +61,7 @@ export default function Header({ activePage, onAction, userRole, setActivePage }
             <span className="text-sm text-white font-medium">{userName}</span>
           </div>
         </div>
-        <button 
+        <button
           onClick={handleButtonClick}
           className="btn-outline flex items-center gap-2 px-4 py-2 bg-white/5 text-white hover:bg-white/10 hover:border-cyan-brand hover:shadow-cyan-brand/10 border border-white/20 rounded-md text-xs font-semibold cursor-pointer transition-all active:scale-95 animate-pulse-glow"
         >
