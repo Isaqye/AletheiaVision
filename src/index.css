@@ -80,3 +80,205 @@ body {
   border-radius: 50%;
   filter: blur(12px);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE — Premium Dark Theme
+   Applied via `.dark` class on root element
+   ═══════════════════════════════════════════════════════════ */
+
+.dark {
+  color-scheme: dark;
+}
+
+/* ─── Body & Main Background ─── */
+.dark body,
+.dark .bg-bg-main {
+  background-color: #0B0F19 !important;
+  color: #CBD5E1 !important;
+}
+
+/* ─── Card Backgrounds (white → dark cards) ─── */
+.dark .bg-white {
+  background-color: #131928 !important;
+}
+
+/* ─── Subtle Backgrounds ─── */
+.dark .bg-slate-50,
+.dark .bg-slate-50\/50,
+.dark .bg-slate-50\/70 {
+  background-color: #1A2035 !important;
+}
+
+.dark .bg-slate-100 {
+  background-color: #1E293B !important;
+}
+
+/* ─── Text Colors ─── */
+.dark .text-slate-800 {
+  color: #E2E8F0 !important;
+}
+
+.dark .text-slate-700 {
+  color: #CBD5E1 !important;
+}
+
+.dark .text-slate-600 {
+  color: #94A3B8 !important;
+}
+
+.dark .text-slate-500 {
+  color: #64748B !important;
+}
+
+.dark .text-slate-400 {
+  color: #475569 !important;
+}
+
+.dark .text-slate-300 {
+  color: #94A3B8 !important;
+}
+
+.dark .text-blue-dark {
+  color: #7DD3FC !important;
+}
+
+.dark .text-blue-petrol {
+  color: #67E8F9 !important;
+}
+
+/* ─── Border Colors ─── */
+.dark .border-slate-200,
+.dark .border-slate-200\/80 {
+  border-color: #1E293B !important;
+}
+
+.dark .border-slate-100 {
+  border-color: #1E293B !important;
+}
+
+.dark .border-slate-50 {
+  border-color: #1E293B !important;
+}
+
+/* ─── Hover States ─── */
+.dark .hover\:bg-slate-50:hover,
+.dark .hover\:bg-slate-50\/70:hover {
+  background-color: #1E293B !important;
+}
+
+.dark .hover\:bg-slate-100:hover {
+  background-color: #243044 !important;
+}
+
+.dark .hover\:border-slate-200:hover,
+.dark .hover\:border-slate-300:hover {
+  border-color: #334155 !important;
+}
+
+/* ─── Table Header Backgrounds ─── */
+.dark tr.bg-slate-50,
+.dark .bg-slate-50.border-b-2 {
+  background-color: #111827 !important;
+}
+
+.dark tr:hover .bg-slate-50\/70,
+.dark tr.hover\:bg-slate-50\/70:hover {
+  background-color: #1A2035 !important;
+}
+
+/* ─── Shadows ─── */
+.dark .shadow-sm {
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .shadow-md,
+.dark .hover\:shadow-md:hover {
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .shadow-lg,
+.dark .hover\:shadow-lg:hover {
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ─── Form Controls ─── */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #1A2035 !important;
+  color: #CBD5E1 !important;
+  border-color: #334155 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #475569 !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #00B8C8 !important;
+}
+
+.dark input[type="range"] {
+  background-color: #334155 !important;
+}
+
+/* ─── Code blocks ─── */
+.dark code {
+  background-color: #0B0F19 !important;
+  color: #67E8F9 !important;
+  border-color: #1E293B !important;
+}
+
+/* ─── Sidebar (already dark, keep stable) ─── */
+.dark aside.bg-blue-dark\/95 {
+  background-color: rgba(5, 12, 26, 0.98) !important;
+}
+
+/* ─── Gradient Banner Adjustments ─── */
+.dark .bg-gradient-to-r.from-blue-dark {
+  --tw-gradient-from: #050C1A !important;
+}
+
+.dark .bg-gradient-to-br.from-slate-900 {
+  --tw-gradient-from: #050C1A !important;
+}
+
+/* ─── Alert/Context Boxes ─── */
+.dark .bg-gradient-to-r.from-blue-dark\/5 {
+  background: linear-gradient(to right, rgba(7, 59, 102, 0.12), rgba(0, 184, 200, 0.08)) !important;
+}
+
+/* ─── Dashed upload borders ─── */
+.dark .border-dashed {
+  border-color: #334155 !important;
+}
+
+/* ─── Scrollbar Styling ─── */
+.dark ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ─── Transition for dark mode toggle ─── */
+body, .bg-white, .bg-bg-main, .bg-slate-50,
+.text-slate-800, .text-slate-700, .text-slate-600,
+.text-slate-500, .text-blue-dark, .border-slate-200,
+.border-slate-100 {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

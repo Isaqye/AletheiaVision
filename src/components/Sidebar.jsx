@@ -13,7 +13,7 @@ import {
   Users
 } from 'lucide-react';
 
-export default function Sidebar({ activePage, setActivePage, userRole, setUserRole }) {
+export default function Sidebar({ activePage, setActivePage, userRole, onLogout }) {
   
   // Menu options for staff members (internal views)
   const staffItems = [
@@ -40,38 +40,16 @@ export default function Sidebar({ activePage, setActivePage, userRole, setUserRo
   return (
     <aside className="fixed top-16 left-0 bottom-0 w-60 bg-blue-dark/95 border-r border-cyan-brand/10 flex flex-col justify-between z-40 overflow-y-auto">
       <div className="flex flex-col">
-        {/* Profile Switcher Section */}
-        <div className="p-4 border-b border-white/10 flex flex-col gap-2">
-          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">Perfil de Acesso</span>
-          <div className="flex bg-white/5 p-1 rounded-md border border-white/10">
-            <button
-              onClick={() => {
-                setUserRole('staff');
-                setActivePage('analysis');
-              }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[10px] font-bold rounded cursor-pointer transition-all ${
-                userRole === 'staff' 
-                  ? 'bg-cyan-brand text-blue-dark font-extrabold shadow' 
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <Users size={12} />
-              Interno
-            </button>
-            <button
-              onClick={() => {
-                setUserRole('client');
-                setActivePage('client-dashboard');
-              }}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[10px] font-bold rounded cursor-pointer transition-all ${
-                userRole === 'client' 
-                  ? 'bg-cyan-brand text-blue-dark font-extrabold shadow' 
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <User size={12} />
-              Cliente
-            </button>
+        {/* User Info Section */}
+        <div className="p-4 border-b border-white/10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-brand to-cyan-700 flex items-center justify-center text-white font-extrabold shadow shadow-cyan-brand/20 shrink-0">
+            {userRole === 'client' ? 'EC' : 'EQ'}
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-[10px] font-extrabold text-cyan-brand uppercase tracking-wider">Acesso Autenticado</span>
+            <span className="text-xs font-semibold text-white truncate">
+              {userRole === 'client' ? 'Editor Científico' : 'Analista Interno'}
+            </span>
           </div>
         </div>
 
@@ -105,9 +83,22 @@ export default function Sidebar({ activePage, setActivePage, userRole, setUserRo
         </nav>
       </div>
 
-      <div className="p-4 border-t border-white/5 text-center flex flex-col gap-1 items-center justify-center">
-        <span className="text-[10px] text-slate-400 font-medium">AletheiaVision Suite</span>
-        <span className="text-[8px] text-cyan-brand/60 font-semibold tracking-wide">VISÃO: {userRole === 'client' ? 'EDITORA PARCEIRA' : 'EQUIPE TÉCNICA'}</span>
+      <div className="p-4 border-t border-white/10 flex flex-col gap-3">
+        <button
+          onClick={onLogout}
+          className="w-full py-2.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-400 hover:text-red-300 font-bold text-xs rounded-lg cursor-pointer transition-all flex items-center justify-center gap-2"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="rotate-180">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sair do Sistema
+        </button>
+        <div className="text-center flex flex-col gap-0.5">
+          <span className="text-[10px] text-slate-500 font-medium">AletheiaVision Suite</span>
+          <span className="text-[8px] text-cyan-brand/50 font-bold tracking-wide uppercase">Visão: {userRole === 'client' ? 'Editora Parceira' : 'Equipe Técnica'}</span>
+        </div>
       </div>
     </aside>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { downloadMockPDF } from '../utils/exportUtils';
 import { Save, FileText, Bell, Check } from 'lucide-react';
 
 export default function ReviewForm({ submission, onAction }) {
@@ -28,6 +29,35 @@ export default function ReviewForm({ submission, onAction }) {
       setJustification('Nenhum padrão anormal detectado na análise fina da imagem de fluorescência. Casos falso positivo.');
     }
   }, [submission]);
+
+  const handleExportPDF = () => {
+    if (!submission) return;
+    const lines = [
+      `ALETHEIAVISION - RELATORIO DE REVISAO HUMANA`,
+      `ID da Submissao: ${submission.id}`,
+      `Data da Submissao: ${submission.submissionDate}`,
+      `--------------------------------------------------------------------------------------`,
+      `INFORMACOES DO ARTIGO:`,
+      `- Titulo: ${submission.title}`,
+      `- Editora: ${submission.editor}`,
+      `- Area: ${submission.area}`,
+      `- Tipo de Imagem: ${submission.imageType}`,
+      `--------------------------------------------------------------------------------------`,
+      `RESULTADOS IA (AletheiaNet):`,
+      `- Score de Similaridade: ${submission.score.toFixed(2)}`,
+      `- Risco Inicial: ${submission.risk}`,
+      `--------------------------------------------------------------------------------------`,
+      `DECISAO DA REVISAO HUMANA:`,
+      `- Parecer do Analista: ${decision === 'confirm' ? 'Confirmar suspeita' : decision === 'discard' ? 'Descartar suspeita' : decision === 'reanalyze' ? 'Nova analise' : 'Encaminhar ao editor'}`,
+      `- Prioridade Definida: ${priority.toUpperCase()}`,
+      `- Justificativa Tecnica: ${justification}`,
+      `- Encaminhamento: ${forwarding}`,
+      `--------------------------------------------------------------------------------------`,
+      `Documento gerado para fins de demonstracao gerencial.`
+    ];
+    downloadMockPDF(`revisao_${submission.id.toLowerCase()}.pdf`, 'Relatorio de Revisao Tecnica', lines);
+    onAction('Relatório PDF gerado com sucesso!');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,7 +146,7 @@ export default function ReviewForm({ submission, onAction }) {
           Salvar revisão
         </button>
         <button 
-          onClick={() => onAction('Relatório PDF gerado com sucesso!')}
+          onClick={handleExportPDF}
           className="flex-1 min-w-[150px] inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 hover:border-cyan-brand text-blue-petrol hover:text-cyan-brand font-semibold rounded-md text-xs cursor-pointer shadow-sm active:scale-98 transition-all"
         >
           <FileText size={14} />

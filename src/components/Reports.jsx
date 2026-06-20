@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { downloadMockPDF, downloadMockCSV } from '../utils/exportUtils';
 import { BarChart2, PieChart, TrendingUp, FileText, Users, AlertTriangle, CheckCircle2, Clock, ArrowUpRight, ArrowDownRight, Download, Target, DollarSign, Activity, Zap, Shield, Lightbulb, Award, Layers, Eye, BriefcaseBusiness, ChevronRight, ArrowRight, Mail, Crosshair, FileSignature, Plug, GraduationCap, CircleCheckBig, Building, Building2, Landmark, ShieldCheck, Rocket, OctagonAlert } from 'lucide-react';
 
 // Mini sparkline component for trend visualization
@@ -65,7 +66,7 @@ function GaugeChart({ value, maxValue = 100, label, color = '#00E5CC', size = 10
   );
 }
 
-export default function Reports({ submissions, editoras }) {
+export default function Reports({ submissions, editoras, triggerToast }) {
   const [activeTab, setActiveTab] = useState('executive');
 
   // ─── Submission Metrics ───
@@ -173,6 +174,60 @@ export default function Reports({ submissions, editoras }) {
     { id: 'insights', label: 'Insights Estratégicos', icon: Lightbulb },
   ];
 
+  const handleExportPDF = () => {
+    const lines = [
+      `ALETHEIAVISION - RELATORIO GERENCIAL CONSOLIDADO`,
+      `Foco de Analise: Performance e Onboarding`,
+      `--------------------------------------------------------------------------------------`,
+      `METRICAS DE ANALISE DE IMAGEM:`,
+      `- Total de submissoes no sistema: ${totalSubmissions}`,
+      `- Score medio de risco de fraude: ${avgScore}`,
+      `- Submissoes pendentes de analise: ${pending}`,
+      `- Submissoes ja revisadas: ${reviewed}`,
+      `- Submissoes finalizadas: ${finished}`,
+      `- Taxa de deteccao de alto risco: ${riskDetectionRate}%`,
+      `--------------------------------------------------------------------------------------`,
+      `DISTRIBUICAO DE RISCOS IDENTIFICADOS:`,
+      `- Casos de ALTO RISCO: ${highRisk} (${((highRisk / totalSubmissions) * 100).toFixed(0)}%)`,
+      `- Casos de MEDIO RISCO: ${mediumRisk} (${((mediumRisk / totalSubmissions) * 100).toFixed(0)}%)`,
+      `- Casos de BAIXO RISCO: ${lowRisk} (${((lowRisk / totalSubmissions) * 100).toFixed(0)}%)`,
+      `--------------------------------------------------------------------------------------`,
+      `METRICAS DE ONBOARDING COMERCIAL:`,
+      `- Total de editoras parceiras: ${totalEditoras}`,
+      `- Clientes com onboarding ativo: ${activeClients}`,
+      `- Volume mensal processado: ${activeVolume} artigos`,
+      `- MRR recorrente estimado: R$ ${Number(currentMRR).toLocaleString('pt-BR')}`,
+      `- NPS medio geral das editoras: ${avgNps} / 100`,
+      `- SLA de cumprimento de prazos: ${slaCompliance}%`,
+      `--------------------------------------------------------------------------------------`,
+      `AletheiaVision Core v3.1 - Relatorio demonstrativo oficial.`
+    ];
+    downloadMockPDF('relatorio_central_gerencial.pdf', 'Central de Relatorios Gerenciais', lines);
+    if (triggerToast) {
+      triggerToast('Relatorio PDF gerado e baixado com sucesso!');
+    }
+  };
+
+  const handleExportPowerBI = () => {
+    const headers = ['ID Editora', 'Nome Editora', 'Porte', 'Volume', 'Area Cientifica', 'Sistema Atual', 'Status Onboarding', 'Responsavel Comercial', 'Responsavel Tecnico', 'NPS'];
+    const rows = editoras.map(ed => [
+      ed.id,
+      ed.nome,
+      ed.porte,
+      ed.volume,
+      ed.area,
+      ed.sistemaAtual,
+      ed.status,
+      ed.responsavelComercial,
+      ed.responsavelTecnico,
+      ed.nps !== null ? ed.nps : 'N/A'
+    ]);
+    downloadMockCSV('onboarding_dataset_powerbi.csv', headers, rows);
+    if (triggerToast) {
+      triggerToast('Dataset exportado no formato CSV para ingestao no Power BI!');
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6">
       {/* Header */}
@@ -187,7 +242,10 @@ export default function Reports({ submissions, editoras }) {
           </div>
         </div>
         <div className="hidden md:flex items-center gap-3">
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-extrabold text-xs rounded-lg cursor-pointer hover:bg-white/20 active:scale-95 transition-all border border-white/20">
+          <button 
+            onClick={handleExportPowerBI}
+            className="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white font-extrabold text-xs rounded-lg cursor-pointer hover:bg-white/20 active:scale-95 transition-all border border-white/20"
+          >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="3" width="6" height="18" rx="1" />
               <rect x="9" y="8" width="6" height="13" rx="1" />
@@ -195,12 +253,16 @@ export default function Reports({ submissions, editoras }) {
             </svg>
             Exportar Power BI
           </button>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-cyan-brand text-blue-dark font-extrabold text-xs rounded-lg cursor-pointer hover:bg-cyan-400 active:scale-95 transition-all shadow-lg shadow-cyan-brand/30">
+          <button 
+            onClick={handleExportPDF}
+            className="flex items-center gap-2 px-5 py-2.5 bg-cyan-brand text-blue-dark font-extrabold text-xs rounded-lg cursor-pointer hover:bg-cyan-400 active:scale-95 transition-all shadow-lg shadow-cyan-brand/30"
+          >
             <Download size={15} />
             Exportar PDF
           </button>
         </div>
       </div>
+
 
       {/* Tab Switcher */}
       <div className="flex bg-white rounded-xl border border-slate-200/80 p-1.5 shadow-sm">

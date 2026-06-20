@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { downloadMockPDF } from './utils/exportUtils';
+import Login from './components/Login';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Filters from './components/Filters';
@@ -21,6 +23,11 @@ import TicketsManager from './components/TicketsManager';
 import MyTickets from './components/client/MyTickets';
 import Chatbot from './components/client/Chatbot';
 import Reports from './components/Reports';
+import Dashboard from './components/Dashboard';
+import HumanReview from './components/HumanReview';
+import EditorsClients from './components/EditorsClients';
+import Settings from './components/Settings';
+import ClientSubmit from './components/client/ClientSubmit';
 
 const initialSubmissions = [
   {
@@ -339,8 +346,24 @@ const initialTickets = [
 ];
 
 export default function App() {
-  const [activePage, setActivePage] = useState('analysis');
-  const [userRole, setUserRole] = useState('staff');
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const saved = sessionStorage.getItem('aletheiaVision_auth');
+    return saved === 'true';
+  });
+  const [activePage, setActivePage] = useState(() => {
+    return sessionStorage.getItem('aletheiaVision_page') || 'analysis';
+  });
+  const [userRole, setUserRole] = useState(() => {
+    return sessionStorage.getItem('aletheiaVision_role') || 'staff';
+  });
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('aletheiaVision_darkMode');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('aletheiaVision_darkMode', JSON.stringify(darkMode));
+  }, [darkMode]);
   
   // Prototype 1 states
   const [submissions, setSubmissions] = useState(initialSubmissions);
@@ -397,6 +420,31 @@ export default function App() {
     setToastVisible(true);
   };
 
+  const handleLoginSuccess = (role) => {
+    setIsAuthenticated(true);
+    setUserRole(role);
+    sessionStorage.setItem('aletheiaVision_auth', 'true');
+    sessionStorage.setItem('aletheiaVision_role', role);
+    
+    const defaultPage = role === 'client' ? 'client-dashboard' : 'dashboard';
+    setActivePage(defaultPage);
+    sessionStorage.setItem('aletheiaVision_page', defaultPage);
+    triggerToast(`Conectado com sucesso como ${role === 'client' ? 'Editora Cliente' : 'Equipe Tecnica'}!`);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('aletheiaVision_auth');
+    sessionStorage.removeItem('aletheiaVision_role');
+    sessionStorage.removeItem('aletheiaVision_page');
+    triggerToast('Desconectado do sistema.');
+  };
+
+  const changePage = (page) => {
+    setActivePage(page);
+    sessionStorage.setItem('aletheiaVision_page', page);
+  };
+
   // Header quick action handler
   const handleHeaderAction = () => {
     if (activePage === 'onboarding') {
@@ -419,6 +467,18 @@ export default function App() {
       setSelectedEditora(newEditora);
       triggerToast(`Nova editora ${newEditora.nome} inserida no onboarding com sucesso!`);
     } else {
+      const lines = [
+        `Filtros Aplicados: Periodo: ${filters.period} | Editora: ${filters.editor} | Area: ${filters.area} | Risco: ${filters.risk}`,
+        `Total de submissoes filtradas: ${filteredSubmissions.length}`,
+        `----------------------------------------------------------------------------------------------------`,
+        ...filteredSubmissions.flatMap(sub => [
+          `[${sub.id}] Risco: ${sub.risk} | Score: ${sub.score.toFixed(2)} | Status: ${sub.status}`,
+          `      Artigo: ${sub.title.substring(0, 60)}`,
+          `      Editora: ${sub.editor} | Area: ${sub.area}`,
+          `----------------------------------------------------------------------------------------------------`
+        ])
+      ];
+      downloadMockPDF('relatorio_submissoes_aletheiavision.pdf', 'Relatorio Consolidado de Submissoes', lines);
       triggerToast('Relatório completo exportado com sucesso (formato PDF)!');
     }
   };
@@ -481,10 +541,23 @@ export default function App() {
     return true;
   });
 
+  if (!isAuthenticated) {
+    return (
+      <div className={darkMode ? 'dark' : ''}>
+        <Login onLoginSuccess={handleLoginSuccess} />
+        <Toast 
+          message={toastMessage} 
+          visible={toastVisible} 
+          onClose={() => setToastVisible(false)} 
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-bg-main text-slate-800 antialiased font-sans">
-      <Header activePage={activePage} onAction={handleHeaderAction} userRole={userRole} setActivePage={setActivePage} />
-      <Sidebar activePage={activePage} setActivePage={setActivePage} userRole={userRole} setUserRole={setUserRole} />
+    <div className={`min-h-screen bg-bg-main text-slate-800 antialiased font-sans ${darkMode ? 'dark' : ''}`}>
+      <Header activePage={activePage} onAction={handleHeaderAction} userRole={userRole} setActivePage={changePage} darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Sidebar activePage={activePage} setActivePage={changePage} userRole={userRole} onLogout={handleLogout} />
 
       <main className="ml-60 pt-16 p-6 md:p-8 flex flex-col gap-6 transition-all duration-300">
         
@@ -492,14 +565,34 @@ export default function App() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <h2 className="text-2xl font-extrabold text-blue-dark tracking-tight">
-              {activePage === 'analysis' && 'Painel de Análise de Imagens Científicas'}
-              {activePage === 'onboarding' && 'Painel de Onboarding de Novas Editoras'}
-              {activePage !== 'analysis' && activePage !== 'onboarding' && activePage.charAt(0).toUpperCase() + activePage.slice(1)}
+              {{ 
+                analysis: 'Painel de Análise de Imagens Científicas',
+                onboarding: 'Painel de Onboarding de Novas Editoras',
+                dashboard: 'Dashboard Executivo',
+                review: 'Revisão Humana — Fila de Análise',
+                editors: 'Editoras Clientes',
+                tickets: 'Gestão de Tickets de Suporte',
+                reports: 'Central de Relatórios Gerenciais',
+                settings: 'Configurações do Sistema',
+                'client-dashboard': 'Portal da Editora',
+                'client-submit': 'Análise de Imagem por IA',
+                'client-tickets': 'Meus Chamados de Suporte',
+              }[activePage] || activePage.charAt(0).toUpperCase() + activePage.slice(1)}
             </h2>
             <p className="text-xs text-slate-500 font-medium">
-              {activePage === 'analysis' && 'Processo 1 — Análise de Imagem de Artigo Submetido'}
-              {activePage === 'onboarding' && 'Gestão de Implantação e Integração de Clientes'}
-              {activePage !== 'analysis' && activePage !== 'onboarding' && 'Módulo de simulação do ecossistema AletheiaVision Core'}
+              {{
+                analysis: 'Processo 1 — Análise de Imagem de Artigo Submetido',
+                onboarding: 'Gestão de Implantação e Integração de Clientes',
+                dashboard: 'Visão consolidada do ecossistema AletheiaVision',
+                review: 'Parecer técnico do analista sobre detecções da IA',
+                editors: 'Visão completa de todas as editoras parceiras',
+                tickets: 'Sistema bidirecional de chamados de suporte',
+                reports: 'Inteligência de dados para decisões estratégicas',
+                settings: 'Preferências da conta, integrações e parâmetros',
+                'client-dashboard': 'Painel personalizado da editora parceira',
+                'client-submit': 'Submeta artigos para verificação de integridade',
+                'client-tickets': 'Acompanhamento dos seus chamados de suporte',
+              }[activePage] || 'Módulo do ecossistema AletheiaVision Core'}
             </p>
           </div>
           <div>
@@ -599,7 +692,7 @@ export default function App() {
           <ClientDashboard 
             clientSubmissions={submissions.filter(s => s.editor === 'Editora BioMed')} 
             clientTickets={tickets.filter(t => t.editor === 'Editora BioMed')} 
-            setActivePage={setActivePage} 
+            setActivePage={changePage} 
           />
         )}
 
@@ -624,39 +717,49 @@ export default function App() {
 
         {/* RELATÓRIOS */}
         {activePage === 'reports' && (
-          <Reports submissions={submissions} editoras={editoras} />
+          <Reports submissions={submissions} editoras={editoras} triggerToast={triggerToast} />
         )}
 
-        {/* OUTRAS TELAS SIMULADAS */}
-        {activePage !== 'analysis' && 
-         activePage !== 'onboarding' && 
-         activePage !== 'client-dashboard' && 
-         activePage !== 'tickets' && 
-         activePage !== 'client-tickets' && 
-         activePage !== 'reports' && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200/80 p-12 text-center flex flex-col items-center justify-center min-h-[350px] animate-fade-in-up">
-            <div className="w-16 h-16 rounded-full bg-cyan-brand/10 text-cyan-brand flex items-center justify-center mb-4">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            </div>
-            <h3 className="text-lg font-bold text-blue-dark mb-1">Módulo Simulado</h3>
-            <p className="text-sm text-slate-500 max-w-md">
-              A tela de <strong>"{activePage.charAt(0).toUpperCase() + activePage.slice(1)}"</strong> está mapeada no ecossistema global do protótipo e é simulada. As duas funcionalidades centrais e interativas integradas são <strong>Análise de Imagens</strong> (Protótipo 1) e <strong>Onboarding de Editoras</strong> (Protótipo 2).
-            </p>
-            <div className="flex gap-4 mt-6">
-              <button 
-                onClick={() => setActivePage('analysis')}
-                className="px-5 py-2.5 bg-gradient-to-br from-blue-dark to-blue-petrol text-white text-xs font-bold rounded-md cursor-pointer hover:shadow active:scale-95 transition-all"
-              >
-                Análise de Imagens (Protótipo 1)
-              </button>
-              <button 
-                onClick={() => setActivePage('onboarding')}
-                className="px-5 py-2.5 bg-white border border-slate-200 text-blue-petrol text-xs font-bold rounded-md cursor-pointer hover:border-cyan-brand active:scale-95 transition-all"
-              >
-                Onboarding de Editoras (Protótipo 2)
-              </button>
-            </div>
-          </div>
+        {/* DASHBOARD EXECUTIVO */}
+        {activePage === 'dashboard' && (
+          <Dashboard 
+            submissions={submissions} 
+            editoras={editoras} 
+            tickets={tickets} 
+            setActivePage={changePage} 
+          />
+        )}
+
+        {/* REVISÃO HUMANA */}
+        {activePage === 'review' && (
+          <HumanReview 
+            submissions={submissions} 
+            onAction={handleAction} 
+            triggerToast={triggerToast} 
+          />
+        )}
+
+        {/* EDITORAS CLIENTES */}
+        {activePage === 'editors' && (
+          <EditorsClients 
+            editoras={editoras} 
+            submissions={submissions} 
+            tickets={tickets} 
+            setActivePage={changePage} 
+          />
+        )}
+
+        {/* CONFIGURAÇÕES */}
+        {activePage === 'settings' && (
+          <Settings userRole={userRole} darkMode={darkMode} setDarkMode={setDarkMode} />
+        )}
+
+        {/* PORTAL DO CLIENTE: SUBMISSÃO DE ARTIGO */}
+        {activePage === 'client-submit' && (
+          <ClientSubmit 
+            clientSubmissions={submissions.filter(s => s.editor === 'Editora BioMed')} 
+            triggerToast={triggerToast} 
+          />
         )}
       </main>
 

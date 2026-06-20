@@ -1,7 +1,7 @@
 import React from 'react';
-import { Download, Plus, UploadCloud } from 'lucide-react';
+import { Download, Plus, UploadCloud, Moon, Sun } from 'lucide-react';
 
-export default function Header({ activePage, onAction, userRole, setActivePage }) {
+export default function Header({ activePage, onAction, userRole, setActivePage, darkMode, setDarkMode }) {
   const isClient = userRole === 'client';
   const isOnboarding = activePage === 'onboarding';
 
@@ -51,7 +51,14 @@ export default function Header({ activePage, onAction, userRole, setActivePage }
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="w-9 h-9 rounded-lg bg-white/5 border border-white/15 flex items-center justify-center text-white hover:bg-white/15 hover:border-cyan-brand/40 cursor-pointer transition-all active:scale-90"
+          title={darkMode ? 'Modo claro' : 'Modo escuro'}
+        >
+          {darkMode ? <Sun size={16} className="text-yellow-300" /> : <Moon size={16} className="text-cyan-brand" />}
+        </button>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-brand to-cyan-700 flex items-center justify-center font-bold text-xs text-white tracking-wider shadow-inner">
             {initials}
